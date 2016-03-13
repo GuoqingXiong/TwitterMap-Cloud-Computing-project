@@ -1,0 +1,84 @@
+Search Result of Query: <%= @ask.query %><br>
+
+
+Find <%= @parsed["hits"]["hit"].length %> tweets in total. <br>
+<% # Print each tweet. %>
+<% @parsed["hits"]["hit"].each do |f| %>
+    <% fields =  f["fields"] %>
+      <%= fields["text"].to_s %><br>
+<% end %>
+
+<html>
+<head>
+  <script
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+  </script>
+
+  <script>
+
+    var twitters = [];
+    var myCenter=[];
+    var myText=[];
+
+
+/*
+ * Transfer Ruby hash to Javascript hash
+ */
+<% @parsed["hits"]["hit"].each do |f| %>
+  <% fields =  f["fields"] %>
+    var field_hash = {};
+    field_hash['text'] = "<%= fields["text"].to_s %>";
+    field_hash['latitude'] = "<%= fields["latitude"].to_s %>";
+    field_hash['longitude'] = "<%= fields["longitude"].to_s %>";
+    twitters.push(field_hash);
+<% end %>
+
+
+    /*
+     * Put tweets location and text into myCenter & myText.
+     */
+    for(var i in twitters){
+         var lati = parseFloat(twitters[i].latitude);
+         var lgti = parseFloat(twitters[i].longitude);
+
+          myCenter[i]=new google.maps.LatLng(lati,lgti);
+          myText[i]=twitters[i].text;
+        }
+
+    /*
+     * Initialize Google Map with location and text.
+     */
+
+    function initialize()
+    {
+      var mapProp = {
+        center:myCenter[0],     // Set center to first twitter's location.
+        zoom:5,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
+
+      var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+      for(var i in myCenter){
+        var marker=new google.maps.Marker({
+          position:myCenter[i]
+        });
+        marker.setMap(map);
+        var infowindow = new google.maps.InfoWindow({
+          content:myText[i]
+        });
+        infowindow.open(map,marker);
+      }
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+  </script>
+</head>
+
+<body>
+<div id="googleMap" style="width:500px;height:380px;"></div>
+</body>
+</html>

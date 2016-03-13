@@ -1,0 +1,4 @@
+<%= form_for(@ask, as: :ask) do |f| %>
+  Query: <%= f.text_field :query %><br />
+  <%= f.submit "Search" %>
+<% end %>

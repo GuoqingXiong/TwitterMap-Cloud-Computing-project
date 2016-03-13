@@ -1,0 +1,2 @@
+class CloudSearchController < ApplicationController
+end
