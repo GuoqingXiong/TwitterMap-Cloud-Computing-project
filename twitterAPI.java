@@ -23,10 +23,10 @@ import twitter4j.TwitterStreamFactory;
 public class twitterAPI {
 
 	
-	private static String consumerKey = "BzBCWLBCup4VRJ7EDDwPmixRH", 
-			consumerSeceret = "lvkwF356cZpRrKqYToPwlisVind5UxXP2g07P1rkjSIjwM5C0U",
-			token = "705579364973469696-OVY1yiCFYCK27n5plvlc3kqZVVT5N4L", 
-			tokenSecret = "gxTZWC1qkkI0iqSmn0z7YtJqGKnTZib6TuLUBFPPD0Uiw";
+	private static String consumerKey = "", 
+			consumerSeceret = "",
+			token = "", 
+			tokenSecret = "";
 
 	public static void main(String[] args) {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
